@@ -7,7 +7,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(title: 'Start Name Generator', home: RandomWords());
+    return MaterialApp(
+      title: 'Start Name Generator',
+      home: RandomWords(),
+      theme: ThemeData(primaryColor: Colors.white),
+    );
   }
 }
 
@@ -35,14 +39,28 @@ class RandomWordsState extends State<RandomWords> {
   void _pushSaved() {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (BuildContext context) {
-        final tiles = _saved.map((WordPair pair) => {
-              ListTile(
-                title: Text(
-                  pair.asPascalCase,
-                  style: _biggerFont,
-                ),
-              )
-            });
+        final tiles = _saved.map((WordPair pair) {
+          return ListTile(
+            title: Text(
+              pair.asPascalCase,
+              style: _biggerFont,
+            ),
+          );
+        });
+
+        final divided = ListTile.divideTiles(
+          context: context,
+          tiles: tiles,
+        ).toList();
+
+        return Scaffold(
+          appBar: AppBar(
+            title: Text('Saved Sugggestions..'),
+          ),
+          body: ListView(
+            children: divided,
+          ),
+        );
       },
     ));
   }
