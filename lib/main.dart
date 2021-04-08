@@ -7,58 +7,64 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('SLW, SFW'),
-      ),
-      body: Center(
-        child: Column(),
-      ),
+    //   return Scaffold(
+    //     appBar: AppBar(
+    //       title: Text('SLW, SFW'),
+    //     ),
+    //     body: Center(
+    //       child: Column(),
+    //     ),
+    //   );
+    // }
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: HelloPage('Hello World!'),
     );
   }
 }
 
-class HelloSLW extends StatelessWidget {
-  int _score = 0;
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Stateless Widget'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text('$_score'),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                FloatingActionButton(
-                    child: Icon(Icons.remove),
-                    onPressed: () {
-                      _score++;
-                      print('$_score clicked');
-                    }),
-                FloatingActionButton(
-                    child: Icon(Icons.add),
-                    onPressed: () {
-                      _score--;
-                      print('$_score clicked');
-                    }),
-              ],
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
+// class HelloSLW extends StatelessWidget {
+//   int _score = 0;
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Stateless Widget'),
+//       ),
+//       body: Center(
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: <Widget>[
+//             Text('$_score'),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.center,
+//               children: <Widget>[
+//                 FloatingActionButton(
+//                     child: Icon(Icons.remove),
+//                     onPressed: () {
+//                       _score++;
+//                       print('$_score clicked');
+//                     }),
+//                 FloatingActionButton(
+//                     child: Icon(Icons.add),
+//                     onPressed: () {
+//                       _score--;
+//                       print('$_score clicked');
+//                     }),
+//               ],
+//             )
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 class HelloPage extends StatefulWidget {
   // stateful 내 변수는 상태가 변경되면 안됨
   // 변수 생성 시 초기화 해야함
-  final String title;
+  String title;
 
   HelloPage(this.title);
 
@@ -68,44 +74,52 @@ class HelloPage extends StatefulWidget {
 
 class _HelloPageState extends State<HelloPage> {
   // _ 붙이면 private
-  // String _message = "message";
-  int _score = 0;
+  String _message = "message";
+  int _counter = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text("$_score"),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                FloatingActionButton(
-                    child: Icon(Icons.remove),
-                    onPressed: () {
-                      setState(() {
-                        _score--;
-                        print('$_score clicked');
-                      });
-                    }),
-                FloatingActionButton(
-                    child: Icon(Icons.add),
-                    onPressed: () {
-                      setState(() {
-                        _score++;
-                        print('$_score clicked');
-                      });
-                    }),
-              ],
-            )
-          ],
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: _changeMessage,
         ),
-      ),
-    );
+        appBar: AppBar(
+          title: Text(widget.title),
+        ),
+        // Center : 가운데 배치
+        body: Center(
+          // Column 하나의 컬럼 : 수직으로 생성하는 라인 생성
+          child: Column(
+            // 정렬을 센터로 줌
+            mainAxisAlignment: MainAxisAlignment.center,
+            // 수평으로 생성하는 라인 정렬
+            // crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              Text(
+                _message,
+                style: TextStyle(fontSize: 30),
+              ),
+              Text(
+                '$_counter',
+                style: TextStyle(fontSize: 30),
+              )
+            ],
+          ),
+        ));
+  }
+
+  void _changeMessage() {
+    setState(() {
+      _message = 'changed Message';
+      _counter++;
+    });
+  }
+
+  void _addCount() {
+    setState(() {
+      _counter++;
+    });
   }
 }
 
